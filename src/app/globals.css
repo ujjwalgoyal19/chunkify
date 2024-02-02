@@ -2,26 +2,143 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --color-base-1: 252, 203, 6;
+    --color-base-2: 6, 252, 80;
+    --color-base-3: 6, 55, 252;
+    --color-base-4: 252, 6, 178;
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 20 14.3% 4.1%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+    --primary: 60 9.1% 97.8%;
+    --primary-foreground: 24 9.8% 10%;
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    --ring: 24 5.7% 82.9%;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.glass-0 {
+  --radial-gradient-color: #8a6cff;
+  --radial-gradient-on-hover: 147, 130, 255;
+  --shadow-color: 16, 0, 51;
+  --inset-color: #1e0d49;
+}
+
+.glass-0 {
+  --radial-gradient-color: #8a6cff;
+  --radial-gradient-on-hover: 147, 130, 255;
+  --shadow-color: 16, 0, 51;
+  --inset-color: #1e0d49;
+}
+.glass-1 {
+  --radial-gradient-color: #ff6c98;
+  --radial-gradient-on-hover: #ffb5cb;
+  --shadow-color: 43, 0, 13;
+  --inset-color: #5f1c30;
+}
+
+.glass {
+  background: radial-gradient(
+      231.94% 231.94% at 50% 100%,
+      var(--radial-gradient-color) 0,
+      rgba(53, 41, 128, 0) 25.24%
+    ),
+    linear-gradient(180deg, rgba(243, 238, 255, 0), rgba(243, 238, 255, 0.04)),
+    rgba(147, 130, 255, 0.01);
+  box-shadow: 0 0 0 0 rgba(var(--shadow-color), 0.4),
+    0 2px 5px 0 rgba(var(--shadow-color), 0.39),
+    0 8px 8px 0 rgba(var(--shadow-color), 0.34),
+    0 19px 11px 0 rgba(var(--shadow-color), 0.2),
+    0 34px 14px 0 rgba(var(--shadow-color), 0.06),
+    0 53px 15px 0 rgba(var(--shadow-color), 0.01),
+    inset 0 0 12px 0 hsla(0, 0%, 100%, 0.08),
+    inset 0 -8px 32px 0 var(--inset-color);
+}
+
+.glass:hover {
+  background: radial-gradient(
+      231.94% 231.94% at 50% 100%,
+      var(--radial-gradient-color) 0,
+      rgba(53, 41, 128, 0) 25.24%
+    ),
+    linear-gradient(180deg, rgba(243, 238, 255, 0), rgba(243, 238, 255, 0.04)),
+    rgba(var(--radial-gradient-on-hover), 0.6);
+  box-shadow: inset 0 0 12px 0 hsla(0, 0%, 100%, 0.08),
+    inset 0 -8px 32px 0 var(--inset-color),
+    0 0 0 0 rgba(var(--shadow-color), 0.4),
+    0 2px 5px 0 rgba(var(--shadow-color), 0.39),
+    0 8px 8px 0 rgba(var(--shadow-color), 0.34),
+    0 19px 11px 0 rgba(var(--shadow-color), 0.2),
+    0 34px 14px 0 rgba(var(--shadow-color), 0.06),
+    0 53px 15px 0 rgba(var(--shadow-color), 0.01);
+}
+
+.text-shadow-0 {
+  --color-base: var(--color-base-1);
+}
+.text-shadow-1 {
+  --color-base: var(--color-base-2);
+}
+
+.text-shadow-2 {
+  --color-base: var(--color-base-3);
+}
+
+.text-shadow-3 {
+  --color-base: var(--color-base-4);
+}
+
+.text-shadow {
+  text-shadow: 0 0 3px rgba(var(--color-base), 0.8),
+    0 0 6px rgba(var(--color-base), 0.8), 0 0 12px rgba(var(--color-base), 0.4),
+    0 0 24px rgba(var(--color-base), 0.2);
+}
+
+.text-shadow-none {
+  text-shadow: none;
 }
