@@ -1,0 +1,12 @@
+export { default as CPlusPlusIcon } from "./cpluplus.svg";
+export { default as GoIcon } from "./go.svg";
+export { default as HTMLIcon } from "./html.svg";
+export { default as JavaIcon } from "./java.svg";
+export { default as JavascriptIcon } from "./javascript.svg";
+export { default as LatexIcon } from "./latex.svg";
+export { default as MarkdownIcon } from "./markdown.svg";
+export { default as PHPIcon } from "./php.svg";
+export { default as PythonIcon } from "./python.svg";
+export { default as RubyIcon } from "./ruby.svg";
+export { default as RustIcon } from "./rust.svg";
+export { default as ScalaIcon } from "./scala.svg";
