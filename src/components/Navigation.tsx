@@ -5,12 +5,12 @@ type Props = {};
 
 const Navigation = (props: Props) => {
   return (
-    <div className="flex justify-center w-full py-2 bg-stone-800/30">
-      <div className="flex flex-row justify-between items-center w-5/6">
-        <div>Chunkify</div>
-        <div>
-          <ModeToggle />
-        </div>
+    <div className="flex flex-row justify-between items-center w-full">
+      <div>
+        <h1 className="text-2xl">Chunkify</h1>
+      </div>
+      <div>
+        <ModeToggle />
       </div>
     </div>
   );
