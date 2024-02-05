@@ -4,10 +4,7 @@
 
 @layer base {
   :root {
-    --color-base-1: 252, 203, 6;
-    --color-base-2: 6, 252, 80;
-    --color-base-3: 6, 55, 252;
-    --color-base-4: 252, 6, 178;
+
     --background: 0 0% 100%;
     --foreground: 20 14.3% 4.1%;
     --card: 0 0% 100%;
@@ -31,7 +28,7 @@
   }
 
   .dark {
-    --background: 20 14.3% 4.1%;
+    --background: 240, 8%, 9%;
     --foreground: 60 9.1% 97.8%;
     --card: 20 14.3% 4.1%;
     --card-foreground: 60 9.1% 97.8%;
@@ -60,85 +57,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-.glass-0 {
-  --radial-gradient-color: #8a6cff;
-  --radial-gradient-on-hover: 147, 130, 255;
-  --shadow-color: 16, 0, 51;
-  --inset-color: #1e0d49;
-}
-
-.glass-0 {
-  --radial-gradient-color: #8a6cff;
-  --radial-gradient-on-hover: 147, 130, 255;
-  --shadow-color: 16, 0, 51;
-  --inset-color: #1e0d49;
-}
-.glass-1 {
-  --radial-gradient-color: #ff6c98;
-  --radial-gradient-on-hover: #ffb5cb;
-  --shadow-color: 43, 0, 13;
-  --inset-color: #5f1c30;
-}
-
-.glass {
-  background: radial-gradient(
-      231.94% 231.94% at 50% 100%,
-      var(--radial-gradient-color) 0,
-      rgba(53, 41, 128, 0) 25.24%
-    ),
-    linear-gradient(180deg, rgba(243, 238, 255, 0), rgba(243, 238, 255, 0.04)),
-    rgba(147, 130, 255, 0.01);
-  box-shadow: 0 0 0 0 rgba(var(--shadow-color), 0.4),
-    0 2px 5px 0 rgba(var(--shadow-color), 0.39),
-    0 8px 8px 0 rgba(var(--shadow-color), 0.34),
-    0 19px 11px 0 rgba(var(--shadow-color), 0.2),
-    0 34px 14px 0 rgba(var(--shadow-color), 0.06),
-    0 53px 15px 0 rgba(var(--shadow-color), 0.01),
-    inset 0 0 12px 0 hsla(0, 0%, 100%, 0.08),
-    inset 0 -8px 32px 0 var(--inset-color);
-}
-
-.glass:hover {
-  background: radial-gradient(
-      231.94% 231.94% at 50% 100%,
-      var(--radial-gradient-color) 0,
-      rgba(53, 41, 128, 0) 25.24%
-    ),
-    linear-gradient(180deg, rgba(243, 238, 255, 0), rgba(243, 238, 255, 0.04)),
-    rgba(var(--radial-gradient-on-hover), 0.6);
-  box-shadow: inset 0 0 12px 0 hsla(0, 0%, 100%, 0.08),
-    inset 0 -8px 32px 0 var(--inset-color),
-    0 0 0 0 rgba(var(--shadow-color), 0.4),
-    0 2px 5px 0 rgba(var(--shadow-color), 0.39),
-    0 8px 8px 0 rgba(var(--shadow-color), 0.34),
-    0 19px 11px 0 rgba(var(--shadow-color), 0.2),
-    0 34px 14px 0 rgba(var(--shadow-color), 0.06),
-    0 53px 15px 0 rgba(var(--shadow-color), 0.01);
-}
-
-.text-shadow-0 {
-  --color-base: var(--color-base-1);
-}
-.text-shadow-1 {
-  --color-base: var(--color-base-2);
-}
-
-.text-shadow-2 {
-  --color-base: var(--color-base-3);
-}
-
-.text-shadow-3 {
-  --color-base: var(--color-base-4);
-}
-
-.text-shadow {
-  text-shadow: 0 0 3px rgba(var(--color-base), 0.8),
-    0 0 6px rgba(var(--color-base), 0.8), 0 0 12px rgba(var(--color-base), 0.4),
-    0 0 24px rgba(var(--color-base), 0.2);
-}
-
-.text-shadow-none {
-  text-shadow: none;
 }
