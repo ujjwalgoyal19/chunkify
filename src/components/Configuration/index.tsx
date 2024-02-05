@@ -16,18 +16,32 @@ import { Language, useConfigContext } from "@/contexts/config-context";
 type Props = {};
 const Configuration = (props: Props) => {
   const config = useConfigContext();
+  if (!config) {
+    return;
+  }
+  const {
+    chunkSize,
+    chunkOverlap,
+    chunkingMethod,
+    language,
+    separator,
+    changeChunkOverlap,
+    changeChunkSize,
+    changeChunkingMethod,
+    changeLanguage,
+    changeSeparator,
+  } = config;
   return (
     <div className=" flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <p>Split Method</p>
-        <Select onValueChange={config?.changeChunkingMethod}>
-          <SelectTrigger className="w-[400px]">
+        <h3 className="text-sm">Split Method</h3>
+        <Select onValueChange={changeChunkingMethod}>
+          <SelectTrigger>
             <SelectValue
               placeholder="Text Split Method"
               defaultValue={
-                ChunkingMethods.find(
-                  (Method) => Method.code === config?.chunkingMethod
-                )?.name
+                ChunkingMethods.find((Method) => Method.code === chunkingMethod)
+                  ?.name
               }
             />
           </SelectTrigger>
@@ -42,25 +56,30 @@ const Configuration = (props: Props) => {
           </SelectContent>
         </Select>
       </div>
-      {config?.chunkingMethod === "cts" || config?.chunkingMethod === "rcts" ? (
-        <div>
-          <p>Separator</p>
+      {chunkingMethod === "cts" || chunkingMethod === "rcts" ? (
+        <div className="flex flex-col gap-2">
+          <h3 className="text-sm">Separator</h3>
           <Input
             type="text"
             placeholder="Separator like \n"
-            value={config?.separator.join(",")}
-            onChange={(e) => config?.changeSeparator(e.currentTarget.value)}
+            value={separator.join(",")}
+            onChange={(e) => changeSeparator(e.currentTarget.value)}
           />
         </div>
       ) : null}
-      {config?.chunkingMethod === "mcrcts" ? (
+      {chunkingMethod === "mcrcts" ? (
         <div className="flex flex-col gap-2">
           <p>Language</p>
-          <Select
-            onValueChange={(value) => config.changeLanguage(value as Language)}
-          >
+          <Select onValueChange={(value) => changeLanguage(value as Language)}>
             <SelectTrigger>
-              <SelectValue placeholder="Select laguage type" />
+              <SelectValue
+                placeholder="Select laguage type"
+                defaultValue={
+                  LangchainSplitterLanguages.find(
+                    (Language) => Language.code === language
+                  )?.name
+                }
+              />
             </SelectTrigger>
             <SelectContent>
               {LangchainSplitterLanguages.map((language) => {
@@ -83,54 +102,55 @@ const Configuration = (props: Props) => {
         </div>
       ) : null}
 
-      <div className="flex flex-col gap-2">
-        <div className="flex justify-between items-center">
-          <p>Chunk Size</p>
-          <Input
-            className="min-w-20 w-fit max-w-fit"
-            type="text"
-            placeholder=""
-            value={config?.chunkSize}
-            onChange={(e) => {
-              if (isNaN(Number(e.currentTarget.value))) {
-                toast("Chunk Size can only be numberical");
-                return;
-              }
-              config?.changeChunkSize(Number(e.currentTarget.value));
-            }}
+      <div className="flex justify-between w-full gap-14">
+        <div className="flex flex-col gap-2 w-full">
+          <div className="flex justify-between items-center">
+            <label className="text-sm">Chunk Size</label>
+            <Input
+              className="w-fit text-right"
+              type="text"
+              value={chunkSize}
+              onChange={(e) => {
+                if (isNaN(Number(e.currentTarget.value))) {
+                  toast("Chunk Size can only be numberical");
+                  return;
+                }
+                changeChunkSize(Number(e.currentTarget.value));
+              }}
+            />
+          </div>
+          <Slider
+            defaultValue={[chunkSize]}
+            max={1000}
+            min={1}
+            step={1}
+            onValueChange={(e) => changeChunkSize(e[0])}
           />
         </div>
-        <Slider
-          defaultValue={[config?.chunkSize!]}
-          max={1000}
-          min={1}
-          step={1}
-          onValueChange={(e) => config?.changeChunkSize(e[0])}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <div className="flex justify-between items-center">
-          <p>Chunk Overlap</p>
-          <Input
-            className="w-fit"
-            type="text"
-            placeholder=""
-            value={config?.chunkOverlap}
-            onChange={(e) => {
-              if (isNaN(Number(e.currentTarget.value))) {
-                toast("Chunk Overlap can only be numberical");
-                return;
-              }
-              config?.changeChunkOverlap(Number(e.currentTarget.value));
-            }}
+        <div className="flex flex-col gap-2 w-full">
+          <div className="flex justify-between items-center">
+            <p>Chunk Overlap</p>
+            <Input
+              className="max-w-20 w-fit"
+              type="text"
+              placeholder=""
+              value={chunkOverlap}
+              onChange={(e) => {
+                if (isNaN(Number(e.currentTarget.value))) {
+                  toast("Chunk Overlap can only be numberical");
+                  return;
+                }
+                changeChunkOverlap(Number(e.currentTarget.value));
+              }}
+            />
+          </div>
+          <Slider
+            value={[chunkOverlap]}
+            max={chunkSize - 1}
+            step={1}
+            onValueChange={(e) => changeChunkOverlap(e[0])}
           />
         </div>
-        <Slider
-          value={[config?.chunkOverlap!]}
-          max={config?.chunkSize! - 1}
-          step={1}
-          onValueChange={(e) => config?.changeChunkOverlap(e[0])}
-        />
       </div>
     </div>
   );
