@@ -1,4 +1,11 @@
 "use client";
+import type {
+  ChunkConfig,
+  ChunkMethod,
+  FileMeta,
+  Language,
+  TokenEncoding,
+} from "@/types";
 import React, {
   createContext,
   useCallback,
@@ -7,13 +14,6 @@ import React, {
   useState,
 } from "react";
 import { toast } from "sonner";
-import type {
-  ChunkConfig,
-  ChunkMethod,
-  FileMeta,
-  TokenEncoding,
-} from "@/types";
-import type { Language } from "@/types";
 
 type Props = {
   children: React.ReactNode;
@@ -52,9 +52,7 @@ const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
 
 export default function ConfigContextProvider({ children }: Props) {
   const [text, setText] = useState("");
-  const [chunkingMethod, setChunkingMethod] = useState<ChunkMethod>(
-    "cts"
-  );
+  const [chunkingMethod, setChunkingMethod] = useState<ChunkMethod>("cts");
   const [chunkSize, setChunkSize] = useState(300);
   const [chunkOverlap, setChunkOverlap] = useState(0);
   const [separators, setSeparators] = useState<string[]>([]);
@@ -67,9 +65,8 @@ export default function ConfigContextProvider({ children }: Props) {
   });
 
   const [files, setFiles] = useState<FileMeta[]>([]);
-  const [tokenEncoding, setTokenEncodingState] = useState<TokenEncoding>(
-    "cl100k_base"
-  );
+  const [tokenEncoding, setTokenEncodingState] =
+    useState<TokenEncoding>("cl100k_base");
 
   const changeText = useCallback((text: string) => {
     setText(text);
@@ -95,18 +92,26 @@ export default function ConfigContextProvider({ children }: Props) {
   const changeChunkOverlap = useCallback(
     (co: number) => {
       if (co >= chunkSize * 0.5) {
-        toast(`Chunk Overlap can not be greater than ${Math.floor(chunkSize * 0.5)}`);
+        toast(
+          `Chunk Overlap can not be greater than ${Math.floor(chunkSize * 0.5)}`
+        );
         setChunkOverlap(Math.floor(chunkSize * 0.5));
       } else {
         setChunkOverlap(co);
       }
-      setChunkConfig((s) => ({ ...s, chunkOverlap: Math.floor(Math.min(co, chunkSize * 0.5)) }));
+      setChunkConfig((s) => ({
+        ...s,
+        chunkOverlap: Math.floor(Math.min(co, chunkSize * 0.5)),
+      }));
     },
     [chunkSize]
   );
 
   const changeSeparator = useCallback((separatorsStr: string) => {
-    const parts = separatorsStr.split(",").map((s) => s.trim()).filter(Boolean);
+    const parts = separatorsStr
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
     setSeparators(parts);
   }, []);
 
@@ -129,7 +134,10 @@ export default function ConfigContextProvider({ children }: Props) {
 
   const setTokenEncoding = useCallback((enc: TokenEncoding) => {
     setTokenEncodingState(enc);
-    setChunkConfig((s) => ({ ...s, tokenOptions: { ...(s.tokenOptions ?? {}), encoding: enc } as any }));
+    setChunkConfig((s) => ({
+      ...s,
+      tokenOptions: { ...(s.tokenOptions ?? {}), encoding: enc } as any,
+    }));
   }, []);
 
   const ContextValue = useMemo(
@@ -140,11 +148,11 @@ export default function ConfigContextProvider({ children }: Props) {
       changeChunkSize,
       chunkOverlap,
       changeChunkOverlap,
-    separators,
-    separator: separators,
+      separators,
+      separator: separators,
       changeSeparator,
-    language,
-    changeLanguage,
+      language,
+      changeLanguage,
       text,
       changeText,
       chunkConfig,
@@ -162,10 +170,10 @@ export default function ConfigContextProvider({ children }: Props) {
       changeChunkSize,
       chunkOverlap,
       changeChunkOverlap,
-    separators,
-    changeSeparator,
-    language,
-    changeLanguage,
+      separators,
+      changeSeparator,
+      language,
+      changeLanguage,
       text,
       changeText,
       chunkConfig,
@@ -178,13 +186,19 @@ export default function ConfigContextProvider({ children }: Props) {
     ]
   );
 
-  return <ConfigContext.Provider value={ContextValue}>{children}</ConfigContext.Provider>;
+  return (
+    <ConfigContext.Provider value={ContextValue}>
+      {children}
+    </ConfigContext.Provider>
+  );
 }
 
 export function useConfigContext() {
   const context = useContext(ConfigContext);
   if (context === undefined) {
-    throw new Error("useConfigContext mush be used within ConfigContextProvider");
+    throw new Error(
+      "useConfigContext mush be used within ConfigContextProvider"
+    );
   }
   return context;
 }

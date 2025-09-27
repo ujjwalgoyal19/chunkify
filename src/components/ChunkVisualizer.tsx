@@ -1,8 +1,7 @@
 "use client";
-import ChunkPill from "./ChunkPill";
-import { useConfigContext } from "@/contexts/config-context";
-import ChunkFetcher from "./ChunkFetcher";
 import ChunkCharts from "@/components/ChunkCharts";
+import ChunkFetcher from "./ChunkFetcher";
+import ChunkPill from "./ChunkPill";
 
 const ShowConfig = (props: { name: string; value: number | string }) => {
   return (

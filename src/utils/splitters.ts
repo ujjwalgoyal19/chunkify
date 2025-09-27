@@ -48,7 +48,10 @@ export const splitTextByCharacter = async (
       if (i < out.length - 1) {
         const tail = c.slice(Math.max(0, c.length - chunkOverlap));
         const next = out[i + 1].pageContent;
-        overlapped.push({ pageContent: tail + next.slice(0, Math.max(0, chunkSize - tail.length)) });
+        overlapped.push({
+          pageContent:
+            tail + next.slice(0, Math.max(0, chunkSize - tail.length)),
+        });
       }
     }
     return overlapped;
@@ -142,17 +145,36 @@ export const splitTextByTokens = async (
 
 export const splitTextSemantically = async (text: string, options?: any) => {
   // placeholder: semantic chunking would compute embeddings and cluster/split
-  return await splitTextByCharacter(text, "\n\n", options?.chunkSize ?? 500, options?.chunkOverlap ?? 50);
+  return await splitTextByCharacter(
+    text,
+    "\n\n",
+    options?.chunkSize ?? 500,
+    options?.chunkOverlap ?? 50
+  );
 };
 
 export const splitTextHierarchically = async (text: string, options?: any) => {
   // placeholder for hierarchical splitting: return multiple granularities
-  const top = await splitTextByCharacter(text, "\n\n", options?.baseChunkSize ?? 1000, options?.overlap ?? 50);
-  const fine = await splitTextByCharacter(text, "\n", Math.max(200, Math.floor((options?.baseChunkSize ?? 1000) / 4)), options?.overlap ?? 20);
+  const top = await splitTextByCharacter(
+    text,
+    "\n\n",
+    options?.baseChunkSize ?? 1000,
+    options?.overlap ?? 50
+  );
+  const fine = await splitTextByCharacter(
+    text,
+    "\n",
+    Math.max(200, Math.floor((options?.baseChunkSize ?? 1000) / 4)),
+    options?.overlap ?? 20
+  );
   return { top, fine };
 };
 
-export const splitTextSlidingWindow = async (text: string, size = 500, overlap = 100) => {
+export const splitTextSlidingWindow = async (
+  text: string,
+  size = 500,
+  overlap = 100
+) => {
   const out: any[] = [];
   let i = 0;
   while (i < text.length) {

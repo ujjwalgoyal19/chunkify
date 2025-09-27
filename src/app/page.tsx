@@ -1,11 +1,11 @@
 "use client";
-import Navigation from "@/components/Navigation";
-import ChunkComposer from "@/components/ChunkComposer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ChunkVisualizer from "@/components/ChunkVisualizer";
 import ChunkCharts from "@/components/ChunkCharts";
-import CodeExport from "@/components/CodeExport";
 import ChunkComparison from "@/components/ChunkComparison";
+import ChunkComposer from "@/components/ChunkComposer";
+import ChunkVisualizer from "@/components/ChunkVisualizer";
+import CodeExport from "@/components/CodeExport";
+import Navigation from "@/components/Navigation";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function Home() {
   return (

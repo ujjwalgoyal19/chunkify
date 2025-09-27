@@ -9,7 +9,10 @@ self.addEventListener("message", async (e: MessageEvent) => {
       const chunks = [];
       for (let i = 0; i < text.length; i += size) {
         chunks.push({ pageContent: text.slice(i, i + size) });
-        const progress = Math.min(100, Math.floor((i / Math.max(1, text.length)) * 100));
+        const progress = Math.min(
+          100,
+          Math.floor((i / Math.max(1, text.length)) * 100)
+        );
         self.postMessage({ id, progress });
       }
       self.postMessage({ id, result: chunks });

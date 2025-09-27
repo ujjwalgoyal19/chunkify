@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import useChunkMetrics from "@/hooks/useChunkMetrics";
 
 export default function ChunkCharts({ chunks }: { chunks?: any[] }) {

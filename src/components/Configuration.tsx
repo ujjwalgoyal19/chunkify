@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Select,
   SelectContent,
@@ -7,12 +6,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ChunkingMethods, LangchainSplitterLanguages } from "@/constants";
-import Image from "next/image";
-import { Slider } from "./ui/slider";
-import { Input } from "./ui/input";
-import { toast } from "sonner";
 import { useConfigContext } from "@/contexts/config-context";
 import type { Language } from "@/types";
+import Image from "next/image";
+import { toast } from "sonner";
+import { Input } from "./ui/input";
+import { Slider } from "./ui/slider";
 
 type Props = {};
 const Configuration = (props: Props) => {

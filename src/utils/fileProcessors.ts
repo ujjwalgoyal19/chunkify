@@ -7,4 +7,3 @@ export async function parseCSV(text: string) {
   const rows = text.split(/\r?\n/).map((r) => r.split(","));
   return rows;
 }
-

@@ -25,12 +25,30 @@ export const DEFAULTS = {
 };
 
 // lightweight metadata for UI
-export const METHOD_METADATA: Record<string, { desc: string; recommended: string }> = {
-  cts: { desc: "Simple fixed-size character chunks.", recommended: "When you need deterministic boundaries." },
-  rcts: { desc: "Recursive character splitting by separators.", recommended: "When preserving logical separators is important." },
-  mcrcts: { desc: "Code-aware recursive splitting.", recommended: "Use for source code and markup." },
-  tts: { desc: "Token-based splitting (encoding aware).", recommended: "When integrating with LLM token budgets." },
-  sem: { desc: "Semantic similarity based chunking.", recommended: "When semantic coherence matters." },
+export const METHOD_METADATA: Record<
+  string,
+  { desc: string; recommended: string }
+> = {
+  cts: {
+    desc: "Simple fixed-size character chunks.",
+    recommended: "When you need deterministic boundaries.",
+  },
+  rcts: {
+    desc: "Recursive character splitting by separators.",
+    recommended: "When preserving logical separators is important.",
+  },
+  mcrcts: {
+    desc: "Code-aware recursive splitting.",
+    recommended: "Use for source code and markup.",
+  },
+  tts: {
+    desc: "Token-based splitting (encoding aware).",
+    recommended: "When integrating with LLM token budgets.",
+  },
+  sem: {
+    desc: "Semantic similarity based chunking.",
+    recommended: "When semantic coherence matters.",
+  },
 };
 
 export default CHUNKING_METHODS;

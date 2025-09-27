@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { exportChunksAsJSON } from "@/utils/exportUtils";
 
 export default function CodeExport({ chunks }: { chunks?: any[] }) {

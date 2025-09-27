@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
 import { useConfigContext } from "@/contexts/config-context";
+import React from "react";
 
 export default function FileUpload() {
   const ctx = useConfigContext();
@@ -21,7 +21,12 @@ export default function FileUpload() {
       "text/x-csrc",
       "text/x-c++src",
     ];
-    if (!allowed.includes(f.type) && !f.name.match(/\.(md|markdown|txt|json|csv|html|js|ts|py|java|c|cpp|cs|rs|go|php|rb|scala)$/i)) {
+    if (
+      !allowed.includes(f.type) &&
+      !f.name.match(
+        /\.(md|markdown|txt|json|csv|html|js|ts|py|java|c|cpp|cs|rs|go|php|rb|scala)$/i
+      )
+    ) {
       // fallback: read as text but notify user
       const text = await f.text();
       ctx.changeText(text);
@@ -36,7 +41,11 @@ export default function FileUpload() {
   return (
     <div>
       <label className="block text-sm">Upload</label>
-      <input type="file" onChange={onFile} accept=".txt,.md,.markdown,.json,.csv,.html,.htm,.js,.ts,.py,.java,.c,.cpp,.cs,.rs,.go,.php,.rb,.scala" />
+      <input
+        type="file"
+        onChange={onFile}
+        accept=".txt,.md,.markdown,.json,.csv,.html,.htm,.js,.ts,.py,.java,.c,.cpp,.cs,.rs,.go,.php,.rb,.scala"
+      />
     </div>
   );
 }
