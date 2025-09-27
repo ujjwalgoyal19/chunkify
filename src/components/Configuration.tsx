@@ -8,10 +8,11 @@ import {
 } from "@/components/ui/select";
 import { ChunkingMethods, LangchainSplitterLanguages } from "@/constants";
 import Image from "next/image";
-import { Slider } from "../ui/slider";
-import { Input } from "../ui/input";
+import { Slider } from "./ui/slider";
+import { Input } from "./ui/input";
 import { toast } from "sonner";
-import { Language, useConfigContext } from "@/contexts/config-context";
+import { useConfigContext } from "@/contexts/config-context";
+import type { Language } from "@/types";
 
 type Props = {};
 const Configuration = (props: Props) => {
@@ -56,17 +57,18 @@ const Configuration = (props: Props) => {
           </SelectContent>
         </Select>
       </div>
-      {chunkingMethod === "cts" || chunkingMethod === "rcts" ? (
-        <div className="flex flex-col gap-2">
-          <h3 className="text-sm">Separator</h3>
-          <Input
-            type="text"
-            placeholder="Separator like \n"
-            value={separator.join(",")}
-            onChange={(e) => changeSeparator(e.currentTarget.value)}
-          />
-        </div>
-      ) : null}
+      {chunkingMethod === "cts" ||
+        (chunkingMethod === "rcts" && (
+          <div className="flex flex-col gap-2">
+            <h3 className="text-sm">Separator</h3>
+            <Input
+              type="text"
+              placeholder="Separator like \n"
+              value={separator.join(",")}
+              onChange={(e) => changeSeparator(e.currentTarget.value)}
+            />
+          </div>
+        ))}
       {chunkingMethod === "mcrcts" ? (
         <div className="flex flex-col gap-2">
           <p>Language</p>
@@ -107,7 +109,7 @@ const Configuration = (props: Props) => {
           <div className="flex justify-between items-center">
             <label className="text-sm">Chunk Size</label>
             <Input
-              className="w-fit text-right"
+              className="w-16 text-right"
               type="text"
               value={chunkSize}
               onChange={(e) => {
@@ -124,16 +126,17 @@ const Configuration = (props: Props) => {
             max={1000}
             min={1}
             step={1}
-            onValueChange={(e) => changeChunkSize(e[0])}
+            onValueChange={(e) => {
+              changeChunkSize(e[0]);
+            }}
           />
         </div>
         <div className="flex flex-col gap-2 w-full">
           <div className="flex justify-between items-center">
-            <p>Chunk Overlap</p>
+            <label className="text-sm">Chunk Overlap</label>
             <Input
-              className="max-w-20 w-fit"
+              className="w-16 text-right"
               type="text"
-              placeholder=""
               value={chunkOverlap}
               onChange={(e) => {
                 if (isNaN(Number(e.currentTarget.value))) {

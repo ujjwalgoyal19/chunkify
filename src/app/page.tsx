@@ -1,18 +1,41 @@
 "use client";
 import Navigation from "@/components/Navigation";
 import ChunkComposer from "@/components/ChunkComposer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ChunkVisualizer from "@/components/ChunkVisualizer";
+import ChunkCharts from "@/components/ChunkCharts";
+import CodeExport from "@/components/CodeExport";
+import ChunkComparison from "@/components/ChunkComparison";
 
 export default function Home() {
   return (
-    <main className="flex flex-col">
-      <div className="w-auto mx-24 flex flex-col">
-        <section className="px-12 flex flex-col gap-10 bg-white/[0.04] pt-6 rounded-b-3xl">
+    <main className="flex flex-col h-screen">
+      <div className="w-auto mx-24 flex flex-col gap-8 h-full">
+        <section className=" flex flex-col gap-10  pt-6 rounded-b-3xl">
           <Navigation />
           <ChunkComposer />
         </section>
-        <section>
-          <div></div>
+        <section className="relative px-12 bg-white/[0.04] h-fit pb-10 rounded-t-3xl pt-8">
+          <div className="absolute"></div>
+          <Tabs defaultValue="visualizer">
+            <TabsList className="mb-6">
+              <TabsTrigger value="visualizer">Visualizer</TabsTrigger>
+              <TabsTrigger value="charts">Charts</TabsTrigger>
+              <TabsTrigger value="code">Code</TabsTrigger>
+            </TabsList>
+            <TabsContent value="visualizer" className="">
+              <ChunkVisualizer />
+            </TabsContent>
+            <TabsContent value="charts">
+              <ChunkCharts />
+            </TabsContent>
+            <TabsContent value="code">
+              <CodeExport />
+            </TabsContent>
+            <TabsContent value="comparison">
+              <ChunkComparison />
+            </TabsContent>
+          </Tabs>
         </section>
       </div>
     </main>
