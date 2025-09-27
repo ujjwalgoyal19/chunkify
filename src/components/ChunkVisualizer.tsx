@@ -2,6 +2,7 @@
 import ChunkCharts from "@/components/ChunkCharts";
 import ChunkFetcher from "./ChunkFetcher";
 import ChunkPill from "./ChunkPill";
+import { useVisualizationContext } from "@/contexts/visualization-context";
 
 const ShowConfig = (props: { name: string; value: number | string }) => {
   return (
@@ -13,6 +14,14 @@ const ShowConfig = (props: { name: string; value: number | string }) => {
 };
 
 const ChunkVisualizer = () => {
+  const { 
+    selectedChunkId, 
+    hoveredChunkId, 
+    onSelectChunk, 
+    onHoverChunk,
+    chunks: visualizationChunks 
+  } = useVisualizationContext();
+
   const getTextSize = (totalCharacters: number) => {
     if (totalCharacters < 300) {
       return "text-4xl leading-normal";
@@ -85,12 +94,22 @@ const ChunkVisualizer = () => {
                   chunkOverlap,
                   totalChunks
                 );
+                
+                // Find corresponding visualization chunk for interactions
+                const vizChunk = visualizationChunks[index];
+                const isSelected = vizChunk && selectedChunkId === vizChunk.id;
+                const isHovered = vizChunk && hoveredChunkId === vizChunk.id;
+                
                 return (
                   <ChunkPill
                     key={index}
                     variant={(index % 4) as 0 | 1 | 2 | 3 | null | undefined}
                     uniquePart={uniquePart}
                     overlapPart={overlapPart}
+                    selected={isSelected}
+                    hovered={isHovered}
+                    onSelect={() => vizChunk && onSelectChunk(vizChunk.id)}
+                    onHover={(hovered) => vizChunk && onHoverChunk(hovered ? vizChunk.id : null)}
                   />
                 );
               })}
