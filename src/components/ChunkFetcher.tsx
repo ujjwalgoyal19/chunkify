@@ -5,12 +5,15 @@ import {
   splitTextByCharacter,
   splitTextRecursivelyByCharacter,
 } from "@/utils/splitters";
+import { convertDocumentsToChunkData } from "@/utils/chunkUtils";
 import { Document } from "langchain/document";
 import { useConfigContext } from "@/contexts/config-context";
+import { useVisualizationContext } from "@/contexts/visualization-context";
 
 const ChunkFetcher = (props: { children: any }) => {
   const config = useConfigContext();
-  const [chunks, setChunks] = useState<Document<Record<string, any>>[]>([]);
+  const { setChunks } = useVisualizationContext();
+  const [chunks, setLocalChunks] = useState<Document<Record<string, any>>[]>([]);
   const { children } = props;
 
   useEffect(() => {
@@ -50,15 +53,20 @@ const ChunkFetcher = (props: { children: any }) => {
           chunkOverlap
         );
       }
-      setChunks(newChunks);
+      
+      setLocalChunks(newChunks);
+      
+      // Convert to ChunkData format for visualization context
+      const chunkData = convertDocumentsToChunkData(newChunks);
+      setChunks(chunkData);
     };
 
     getChunks();
-  }, [config]);
+  }, [config, setChunks]);
 
   return (
     <>
-      {children(chunks, config.chunkOverlap, chunks.length, config.text.length)}
+      {children(chunks, config?.chunkOverlap || 0, chunks.length, config?.text?.length || 0)}
     </>
   );
 };

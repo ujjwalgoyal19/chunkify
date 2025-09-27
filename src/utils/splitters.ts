@@ -1,9 +1,45 @@
 import type { Language, TokenEncoding } from "@/types";
+import { v4 as uuidv4 } from 'uuid';
 
 // Basic, self-contained splitter implementations.
 // These return arrays of objects shaped like LangChain Documents: { pageContent: string, metadata?: any }
 
 type Doc = { pageContent: string; metadata?: Record<string, any> };
+
+// Helper function to add metadata to chunks
+const addChunkMetadata = (docs: Doc[], originalText: string): Doc[] => {
+  let currentPos = 0;
+  
+  return docs.map((doc, index) => {
+    const content = doc.pageContent;
+    const startIndex = index;
+    const endIndex = index + 1;
+    
+    // Find character positions in original text
+    const charStart = originalText.indexOf(content, currentPos);
+    const charEnd = charStart >= 0 ? charStart + content.length : currentPos + content.length;
+    
+    // Simple token count estimation (words + punctuation)
+    const tokensCount = content.split(/\s+/).filter(Boolean).length + 
+                       (content.match(/[.!?,:;]/g) || []).length;
+    
+    currentPos = charEnd;
+    
+    return {
+      ...doc,
+      metadata: {
+        ...doc.metadata,
+        id: uuidv4(),
+        startIndex,
+        endIndex,
+        charStart: Math.max(0, charStart),
+        charEnd,
+        tokensCount,
+        length: content.length,
+      }
+    };
+  });
+};
 
 export const splitTextByCharacter = async (
   text: string,
@@ -54,9 +90,9 @@ export const splitTextByCharacter = async (
         });
       }
     }
-    return overlapped;
+    return addChunkMetadata(overlapped, text);
   }
-  return out;
+  return addChunkMetadata(out, text);
 };
 
 export const splitTextRecursivelyByCharacter = async (
@@ -91,7 +127,7 @@ export const splitTextRecursivelyByCharacter = async (
     return out;
   };
 
-  return trySplit(text, 0);
+  return addChunkMetadata(trySplit(text, 0), text);
 };
 
 export const splitCodeMarkupRecursivelyByCharacter = async (
@@ -119,7 +155,7 @@ export const splitCodeMarkupRecursivelyByCharacter = async (
     }
   }
   if (buffer.length) out.push({ pageContent: buffer });
-  return out;
+  return addChunkMetadata(out, text);
 };
 
 export const splitTextByTokens = async (
@@ -140,7 +176,7 @@ export const splitTextByTokens = async (
     if (i + chunkSize >= tokens.length) break;
     i += Math.max(1, chunkSize - chunkOverlap);
   }
-  return out;
+  return addChunkMetadata(out, text);
 };
 
 export const splitTextSemantically = async (text: string, options?: any) => {
